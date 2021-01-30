@@ -17,8 +17,8 @@ function setup() {
   balloon.scale=0.7;
   //balloon.setCollider("rectangle",0,150,balloon.width,160);
   //
-  var balloonPosition=database.ref('balloon/height');
-  balloonPosition.on("value",readPosition,showError);
+  var balloonPosition=database.ref('balloon/position');
+  balloonPosition.on("value",readHeight,showError);
   //Creating ground for gravity
 //  ground=createSprite(width/2,955,1365,20);
 }
@@ -48,7 +48,7 @@ else if(keyDown(RIGHT_ARROW)){
 }
 else*/ if(keyDown(UP_ARROW)){
  // balloon.y=balloon.y-10;
-  updateHeight(0,-1);
+  updateHeight(0,-10);
   balloon.scale=balloon.scale -0.01;
 
 }
@@ -62,23 +62,23 @@ else*/ if(keyDown(UP_ARROW)){
 }
 
 function updateHeight(x,y){
-  database.ref('balloon/height').set({
-    'x':updateHeight.x+x,
-    'y':updateHeight.y+y
+  database.ref('balloon/position').set({
+    'x': height.x+x,
+    'y': height.y+y
   })
 }
 
 function readHeight(data){
   height=data.val();
-  balloon.x=height.x;
-  balloon.y=height.y;
+ balloon.x=height.x;
+ balloon.y=height.y;
 }
 
 function showError(){
   console.log("Error in writing to the database");
 }
-function readPosition(data){
+/*function readPosition(data){
   position = data.val();
   balloon.x = position.x;
   balloon.y = position.y
-}
+}*/
