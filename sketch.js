@@ -15,47 +15,48 @@ function setup() {
  balloon=createSprite(160, 420, 10, 10);
  balloon.addImage(balloonImg);
   balloon.scale=0.7;
-  //balloon.setCollider("rectangle",0,150,balloon.width,160);
+  balloon.setCollider("rectangle",0,150,balloon.width,160);
   //
   var balloonPosition=database.ref('balloon/position');
   balloonPosition.on("value",readHeight,showError);
   //Creating ground for gravity
-//  ground=createSprite(width/2,955,1365,20);
+ ground=createSprite(width/2,605,1365,20);
 }
 
 function draw() {
   background(backgroundImg);  
-  //balloon.velocityY = balloon.velocityY + 0.03;
- // ground.visible=false;
-  /*if(balloon.isTouching(ground)){
+  balloon.velocityY = balloon.velocityY + 0.01;
+  ground.visible=false;
+  if(balloon.isTouching(ground)){
     balloon.scale=0.8;
-  }*/
-  //balloon.collide(ground);
+  }
+  balloon.collide(ground);
 //Giving keyCommands
-/*if(keyDown(UP_ARROW)){
+if(keyDown(UP_ARROW)){
  
   balloon.addAnimation("hotAirBalloon",balloonImg2);
-  ba*/
- /*if(keyDown(LEFT_ARROW)){
+}
+ if(keyDown(LEFT_ARROW)){
+  updateHeight(-5,0);
 
-  balloon.x=balloon.x-10;
   
   balloon.addImage(balloonImg2);
  }
 else if(keyDown(RIGHT_ARROW)){
-  balloon.x=balloon.x+10;
+  updateHeight(5,0);
+
   balloon.addImage(balloonImg3);
 }
-else*/ if(keyDown(UP_ARROW)){
+else if(keyDown(UP_ARROW)){
  // balloon.y=balloon.y-10;
-  updateHeight(0,-10);
+  updateHeight(0,-5);
   balloon.scale=balloon.scale -0.01;
 
 }
-/*else if(keyDown(DOWN_ARROW)){
-  balloon.y=balloon.y+10;
+else if(keyDown(DOWN_ARROW)){
+  updateHeight(0,5);
   balloon.scale=balloon.scale +0.01;
-}*/
+}
   drawSprites();
 
 
@@ -63,22 +64,17 @@ else*/ if(keyDown(UP_ARROW)){
 
 function updateHeight(x,y){
   database.ref('balloon/position').set({
-    'x': height.x+x,
-    'y': height.y+y
+    'x': position.x+x,
+    'y': position.y+y
   })
 }
 
 function readHeight(data){
-  height=data.val();
- balloon.x=height.x;
- balloon.y=height.y;
+ position=data.val();
+ balloon.x=position.x;
+ balloon.y=position.y;
 }
 
 function showError(){
   console.log("Error in writing to the database");
 }
-/*function readPosition(data){
-  position = data.val();
-  balloon.x = position.x;
-  balloon.y = position.y
-}*/
