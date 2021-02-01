@@ -27,6 +27,12 @@ function draw() {
   background(backgroundImg);  
   balloon.velocityY = balloon.velocityY + 0.01;
   ground.visible=false;
+
+fill(98, 247, 69)
+strokeWeight(5);
+stroke(255, 174, 0);
+textSize(40);
+text("*Use Arrow Keys to Move the Balloon*",20,50)
   if(balloon.isTouching(ground)){
     balloon.scale=0.8;
   }
